@@ -33,21 +33,11 @@ app.post("/login", (req, res) => {
 });
 //! READ
 //* Get all users
-app.get("/users", (req, res) => {
+app.get("/users", withAuth, (req, res) => {
   try {
     db.find().then(response => {
       res.status(200).json(response);
     });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-//* Get hash
-app.get("/hash", (req, res) => {
-  try {
-    const name = req.query.name;
-    const hash = bcrypt.hashSync(name, 8);
-    res.send(`The hash for ${name} is ${hash}`);
   } catch (err) {
     res.status(500).json(err);
   }
